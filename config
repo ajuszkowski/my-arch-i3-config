@@ -38,14 +38,18 @@ exec --no-startup-id xautolock -time 5 -locker i3lock -c 050505 &
 bindsym $mod+x exec i3lock -c 050505 -n
 # exec --no-startup-id xsetroot -solid "#204a87"
 
-bindsym $mod+m exec xrandr --output eDP1 --rate 60 --auto --primary --output DP1 --rate 60 --auto --right-of eDP1 
-bindsym $mod+Shift+m exec xrandr --output DP1 --off --output eDP1 --rate 60 --auto --primary 
+bindsym $mod+m exec xrandr --output eDP1 --mode 1280x720 --primary --output DP1 --auto --right-of eDP1 
+bindsym $mod+Shift+m exec xrandr --output DP1 --off --output eDP1 --mode 1280x720 --primary 
 
 exec --no-startup-id nm-applet
 
 # resolution shortcuts
 bindsym $mod+o exec xrandr --output eDP1 --mode 1920x1080
 bindsym $mod+Shift+o exec xrandr --output eDP1 --mode 1600x900
+
+# move workspace to another monitor
+#bindcode $mod+Shift+60 exec i3-msg move workspace to output left
+bindcode $mod+Shift+61 exec i3-msg move workspace to output right
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
@@ -75,9 +79,9 @@ bindsym Mod1+F2 exec dmenu_run  # Alt+F2
 bindsym $mod+h focus left
 #bindsym Mod1+Shift+Tab focus left  #does not work somehow
 bindsym $mod+j focus down
-bindsym $mod+Prior focus down 
+#bindsym $mod+Prior focus down 
 bindsym $mod+k focus up
-bindsym $mod+Next focus up
+#bindsym $mod+Next focus up
 bindsym $mod+l focus right
 bindsym Mod1+Tab focus right
 
@@ -194,10 +198,12 @@ bindsym XF86AudioLowerVolume exec amixer -q set Master 10%- unmute
 bindsym XF86AudioMute exec amixer -q set Master mute
 bindsym Mod1+1 exec setxkbmap us -option ctrl:nocaps  # Alt+1
 bindsym Mod1+2 exec setxkbmap ru -option ctrl:nocaps  # Alt+2
+bindsym Mod1+3 exec setxkbmap ca -variant fr -option ctrl:nocaps  # Alt+3
 
 #bindsym Print exec scrot -e 'mv $f ~/Downloads/Screenshots'
-bindsym Print exec gnome-screenshot --clipboard
+bindsym Print exec gnome-screenshot
 bindsym Shift+Print exec gnome-screenshot --area --clipboard
+bindsym Control+Shift+Print exec gnome-screenshot --area
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
