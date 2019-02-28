@@ -71,9 +71,6 @@ bindsym Mod1+F2 exec dmenu_run  # Alt+F2
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-#bindsym $mod+j focus left
-#bindsym $mod+k focus down
-#bindsym $mod+l focus up
 #bindsym $mod+semicolon focus right
 # i3 uses jkl; instead of hjkl -- fix that
 bindsym $mod+h focus left
@@ -155,17 +152,27 @@ bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 
+bindsym $mod+Control+Right workspace next
+bindsym $mod+Control+l     workspace next
+bindsym $mod+Control+Left  workspace prev
+bindsym $mod+Control+h     workspace prev
+
 # move focused container to workspace and switch to the workspace
-bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
+bindsym $mod+Shift+1 move container to workspace $ws1 ;  workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2 ;  workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3 ;  workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4 ;  workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5 ;  workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6 ;  workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7 ;  workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8 ;  workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9 ;  workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10 ; workspace $ws10
+
+bindsym $mod+Shift+Control+Right move container to workspace next ; workspace next
+bindsym $mod+Shift+Control+l     move container to workspace next ; workspace next
+bindsym $mod+Shift+Control+Left  move container to workspace prev ; workspace prev
+bindsym $mod+Shift+Control+h     move container to workspace prev ; workspace prev
 
 # inverse screen colors
 bindsym $mod+i exec xcalib -i -a
@@ -202,8 +209,8 @@ bindsym Mod1+3 exec setxkbmap ca -variant fr -option ctrl:nocaps  # Alt+3
 
 #bindsym Print exec scrot -e 'mv $f ~/Downloads/Screenshots'
 bindsym Print exec gnome-screenshot
-bindsym Shift+Print exec gnome-screenshot --area --clipboard
-bindsym Control+Shift+Print exec gnome-screenshot --area
+bindsym Shift+Print exec gnome-screenshot --area
+bindsym Control+Shift+Print exec gnome-screenshot --area --clipboard
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
