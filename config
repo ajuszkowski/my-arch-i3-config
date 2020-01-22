@@ -14,6 +14,7 @@ exec xset s noblank && xset s off & xset -dpms
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -34,14 +35,35 @@ font pango:monospace 8
 floating_modifier $mod
 
 # dark background
-exec --no-startup-id xautolock -time 5 -locker i3lock -c 050505 &
-bindsym $mod+x exec i3lock -c 050505 -n
+exec --no-startup-id xautolock -time 5 -locker i3lock -c 000000 &
+bindsym $mod+x exec --no-startup-id "i3lock -c 000000"
+#i3lock -i /home/ay/Pictures/windows_crashed.png
+#bindsym $mod+x exec i3lock -c 050505 -n
 # exec --no-startup-id xsetroot -solid "#204a87"
 
-bindsym $mod+m exec xrandr --output eDP1 --mode 1280x720 --primary --output DP1 --auto --right-of eDP1 
-bindsym $mod+Shift+m exec xrandr --output DP1 --off --output eDP1 --mode 1280x720 --primary 
+bindsym $mod+m exec xrandr --output eDP1 --mode 1600x800 --primary --output DP1 --auto --right-of eDP1 
+bindsym $mod+Shift+m exec xrandr --output DP1 --off --output eDP1 --mode 1600x800 --primary 
 
 exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet 
+exec --no-startup-id blueberry-tray 
+exec --no-startup-id blueman-applet # enable bluetooth
+exec pasystray
+exec_always --no-startup-id dunst -config ~/.config/dunst/dunstrc  # notification service
+exec gnome-settings-daemon
+
+# clipboard
+exec --no-startup-id clipmenud  # run as systemctl: 'clipmenud'
+bindsym $mod+c exec clipmenu
+
+
+bindsym $alt+F2 exec rofi -show run
+bindsym $mod+Tab exec rofi -combi-modi window -show combi -modi combi 
+
+#bindsym XF86AudioPlay exec playerctl play
+#bindsym XF86AudioPause exec playerctl pause
+#bindsym XF86AudioNext exec playerctl next
+#bindsym XF86AudioPrev exec playerctl previous
 
 # resolution shortcuts
 bindsym $mod+o exec xrandr --output eDP1 --mode 1920x1080
@@ -51,12 +73,23 @@ bindsym $mod+Shift+o exec xrandr --output eDP1 --mode 1600x900
 #bindcode $mod+Shift+60 exec i3-msg move workspace to output left
 bindcode $mod+Shift+61 exec i3-msg move workspace to output right
 
+show_marks yes 
+
+# move to an urgent window
+focus_on_window_activation urgent 
+#bindsym $mod+q [urgent=latest] focus
+bindsym $mod+grave workspace back_and_forth 
+bindsym $mod+Shift+grave move container to workspace back_and_forth ; workspace back_and_forth
+
+# The window will always be focused and not be marked urgent
+focus_on_window_activation focus
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+t exec i3-sensible-terminal
+bindsym $mod+p exec nautilus
 
 # start chromium
-bindsym $mod+r exec chromium 
+bindsym $mod+r exec google-chrome-stable
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -64,23 +97,19 @@ bindsym Mod1+F4 kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
-bindsym Mod1+F2 exec dmenu_run  # Alt+F2 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-# change focus
-#bindsym $mod+semicolon focus right
+# focus
+focus_wrapping no
+
 # i3 uses jkl; instead of hjkl -- fix that
 bindsym $mod+h focus left
-#bindsym Mod1+Shift+Tab focus left  #does not work somehow
 bindsym $mod+j focus down
-#bindsym $mod+Prior focus down 
 bindsym $mod+k focus up
-#bindsym $mod+Next focus up
 bindsym $mod+l focus right
-bindsym Mod1+Tab focus right
 
 
 # alternatively, you can use the cursor keys:
@@ -102,10 +131,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+b split h
+bindsym $mod+b split v
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -122,7 +151,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -189,10 +218,10 @@ exec xinput set-prop 17 288 1
 exec xinput set-prop 17 296 1
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 2 # increase screen brightness
 #bindsym XF86MonBrightnessUp exec light -A 20 # increase screen brightness
 #bindcode 233 exec light -A 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 2 # decrease screen brightness
 #exec bindsym XF86MonBrightnessDown exec light -U 20 # decrease screen brightness
 #exec bindcode 232 exec light -U 20 # decrease screen brightness
 
@@ -201,16 +230,16 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightnes
 #bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 #bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q set Master 10%- unmute
-bindsym XF86AudioMute exec amixer -q set Master mute
-bindsym Mod1+1 exec setxkbmap us -option ctrl:nocaps  # Alt+1
-bindsym Mod1+2 exec setxkbmap ru -option ctrl:nocaps  # Alt+2
-bindsym Mod1+3 exec setxkbmap ca -variant fr -option ctrl:nocaps  # Alt+3
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
+bindsym XF86AudioMute exec amixer -D pulse set Master 1+ toggle 
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+bindsym $alt+1 exec setxkbmap us -option ctrl:nocaps  # Alt+1
+bindsym $alt+2 exec setxkbmap ru -option ctrl:nocaps  # Alt+2
+bindsym $alt+3 exec setxkbmap us -option ctrl:nocaps -variant intl  # Alt+3
 
 #bindsym Print exec scrot -e 'mv $f ~/Downloads/Screenshots'
-bindsym Print exec gnome-screenshot
-bindsym Shift+Print exec gnome-screenshot --area
-bindsym Control+Shift+Print exec gnome-screenshot --area --clipboard
+bindsym Print exec gnome-screenshot --interactive
+bindsym Shift+Print exec gnome-screenshot --area --interactive
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -220,10 +249,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        #bindsym j resize shrink width 10 px or 10 ppt
+        #bindsym k resize grow height 10 px or 10 ppt
+        #bindsym l resize shrink height 10 px or 10 ppt
+        #bindsym semicolon resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -234,18 +263,21 @@ mode "resize" {
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
-        bindsym $mod+F7 mode "default"
+        bindsym $mod+g mode "default"
 }
 
-bindsym $mod+F7 mode "resize"
+bindsym $mod+g mode "resize"
+
+
+popup_during_fullscreen smart
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+	status_command i3status
 	# disable wheeling workspaces
-	bindsym button4 nop
-	bindsym button5 nop
+	#bindsym button4 nop
+	#bindsym button5 nop
 }
 
 bindsym button4 nop
