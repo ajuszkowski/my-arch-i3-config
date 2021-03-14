@@ -18,7 +18,12 @@ set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+#font pango:monospace 8
+font pango:DejaVu Sans Mono 8
+#font pango:hermit 8
+#font pango:Terminus 8
+#font pango:Source Code Pro for Powerline, FontAwesome Regular, Icons 8
+#font pango:UbuntuMono-regular 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -37,8 +42,9 @@ floating_modifier $mod
 # battery warning
 exec --no-startup-id i3-battery-popup -N -t 1m -L 8 -l 4
 
-# display color
-exec --no-startup-id xflux -k 4500 -l 1
+# display color shift to eye protect mode
+#exec --no-startup-id xflux -k 4500 -l 1
+exec --no-startup-id redshift
 
 # dark background
 exec --no-startup-id xautolock -time 5 -locker i3lock -c 000000 &
@@ -285,8 +291,9 @@ popup_during_fullscreen smart
 bar {
 	status_command i3status
 	# disable wheeling workspaces
-	#bindsym button4 nop
-	#bindsym button5 nop
+	bindsym button4 nop
+	bindsym button5 nop
+	#position top
 }
 
 bindsym button4 nop
@@ -298,8 +305,10 @@ workspace_layout tabbed
 # caps lock as ctrl
 #exec setxkbmap -option caps:ctrl_modifier  # is done by ~/.Xmodmap which is executed in ~/.xinitrc
 # 'setxkbmap -option' to release
+
 # no window borders
 new_window normal 0 px
+#new_window normal 1 px
 
 # disable mouse jumping https://faq.i3wm.org/question/352/cursor-jumps-to-window.1.html
 mouse_warping none
